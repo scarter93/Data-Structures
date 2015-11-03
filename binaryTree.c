@@ -1,3 +1,8 @@
+//*
+//BinaryTree implementation using recursion
+//(C) Stephen Carter
+//stephen.carter@mail.mcgill.ca
+//
 #include <stdlib.h>
 #include <stdio.h>
 
