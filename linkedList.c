@@ -51,6 +51,25 @@ node * reverseList(node *head, node *reverse){
   }
 }
 
+int detectLoop(node *head){
+  node* first = head;
+  node* second = head;
+
+  while(first != NULL && second != NULL){
+    first = first->next;
+
+    if(second->next != NULL)
+      second = second->next->next;
+    else
+      return 0;
+    if(second == first){
+      return 1;
+    }
+
+  }
+  return 0;
+}
+
 void printList(node *head){
   if(head != 0){
     printf("%d\n", head->data);
@@ -66,6 +85,11 @@ void main(int argc, char** argv){
   addNode(7, &head);
   addNode(10, &head);
 
+  //head->next->next->next->next = head->next;
+  if(detectLoop(head)){
+    printf("loop found\n");
+    exit(0);
+  }
   printList(head);
 
   deleteNode(7, head);
