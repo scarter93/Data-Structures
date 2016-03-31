@@ -70,35 +70,74 @@ int detectLoop(node *head){
   return 0;
 }
 
+void swap(int *a,int *b){
+	int temp = *a;
+	*a = *b;
+	*b = temp;
+}
+
 void printList(node *head){
   if(head != 0){
     printf("%d\n", head->data);
     printList(head->next);
   }
 }
+node* merge_sorted(node *in1, node *in2){
+	//node *in1 = list1;
+	//node *in2 = list2;
+	node *merged = NULL;
+	node **merging = &merged;
+	while(in1 != NULL && in2 != NULL){
+		if(in1->data < in2->data){
+			(*merging) = in1;
+			in1 = in1->next;
+		}else{
+			(*merging) = in2;
+			in2 = in2->next;
+		}
+		merging = &((*merging)->next);
+	}
+	if(in1 == NULL){
+		*merging = in2;
+		return merged;
+	}else if(in2 == NULL){
+		*merging = in2;
+		return merged;
+	}
+}
 
 void main(int argc, char** argv){
   node *head = NULL;
+  node *test = NULL;
+  node *merged = NULL;
 
   addNode(5, &head);
   addNode(6, &head);
   addNode(7, &head);
   addNode(10, &head);
+  
+  addNode(4, &test);
+  addNode(8, &test);
+  addNode(11, &test);
+
+  merged = merge_sorted(head, test);
+
+  printList(merged);
 
   //head->next->next->next->next = head->next;
-  if(detectLoop(head)){
+ if(detectLoop(head)){
     printf("loop found\n");
     exit(0);
   }
-  printList(head);
+ // printList(head);
 
   deleteNode(7, head);
 
-  printList(head);
+ // printList(head);
 
   head = reverseList(head, NULL);
 
-  printList(head);
+  //printList(head);
 
   destroyList(head);
 }
